@@ -6,7 +6,8 @@ class TasksController < ApplicationController
   def index
     
     if logged_in?
-      @tasks = Task.all
+      @task = current_user.tasks.build
+      @tasks = current_user.tasks.all
     else
       redirect_to login_path
     end
@@ -21,7 +22,7 @@ class TasksController < ApplicationController
   end
   
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     
     if @task.save
       flash[:success] = "Task が正常に追加されました"
